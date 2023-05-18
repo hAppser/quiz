@@ -12,62 +12,25 @@
 </template>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref, computed } from "vue";
+import { useQuizStore } from "store/quizStore";
+export default defineComponent({
+  setup() {
+    const quizStore = useQuizStore();
+    const selectedOption = ref("");
+
+    const currentQuestion = computed(() => quizStore.getCurrentQuestion());
+
+    const submitAnswer = () => {
+      quizStore.submitAnswer(selectedOption.value);
+      selectedOption.value = "";
+    };
+
     return {
-      questions: [
-        {
-          id: 1,
-          question: "Question 1",
-          answers: [
-            { id: 1, text: "Answer 1" },
-            { id: 2, text: "Answer 2" },
-            { id: 3, text: "Answer 3" },
-          ],
-        },
-        {
-          id: 2,
-          question: "Question 2",
-          answers: [
-            { id: 1, text: "Answer 1" },
-            { id: 2, text: "Answer 2" },
-            { id: 3, text: "Answer 3" },
-          ],
-        },
-      ],
-      currentQuestionIndex: 0,
-      selectedAnswerId: null,
-      selectedAnswers: [], // массив выбранных ответов
+      currentQuestion,
+      selectedOption,
+      submitAnswer,
     };
   },
-  computed: {
-    // currentQuestion() {
-    //   return this.questions[this.currentQuestionIndex];
-    // },
-  },
-  methods: {
-    saveAnswer() {
-      // находим выбраный ответ
-      const selectedAnswer = this.currentQuestion.answers.find(
-        (answer) => answer.id === this.selectedAnswerId
-      );
-
-      // Добавляем выбранный ответ в массив selectedAnswers
-      this.selectedAnswers.push({
-        question: this.currentQuestion.question,
-        selectedAnswer: selectedAnswer ? selectedAnswer.text : "No answer",
-      });
-
-      // обнуляем выбранное
-
-      this.selectedAnswerId = null;
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.currentQuestionIndex++;
-      } else {
-        console.log("Quiz completed!");
-        console.log(this.selectedAnswers); // массив со всеми выбранными ответами
-      }
-    },
-  },
-};
+});
 </script>
