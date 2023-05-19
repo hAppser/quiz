@@ -45,9 +45,13 @@ export const useQuizStore = defineStore({
         ],
         selectedAnswer: null,
       },
+      {
+        id: 5,
+        question: " ",
+        selectedAnswer: null,
+      },
     ],
     currentQuestionIndex: 0,
-    // selectedAnswerId: null,
     selectedAnswers: [], // массив выбранных ответов
   }),
   getters: {
@@ -69,12 +73,6 @@ export const useQuizStore = defineStore({
         }
         return;
       }
-      console.log("Quiz is over!");
     },
   },
 });
-// Добавляем выбранный ответ в массив selectedAnswers
-// this.selectedAnswers.push({
-//   question: this.currentQuestion.question,
-//   selectedAnswer: selectedAnswer ? selectedAnswer.text : "No answer",
-// });
