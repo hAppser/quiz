@@ -1,20 +1,22 @@
 <template>
   <v-form>
-    <h1>{{ currentQuestion.question }}</h1>
-    <ul v-if="currentQuestion.id < 5">
-      <li v-for="answer in currentQuestion.answers" :key="answer.id">
-        <v-btn
-          v-if="currentQuestion.selectedAnswer === null"
-          :value="answer.id"
-          v-model="selectedAnswer"
-          :disabled="currentQuestion.selectedAnswer !== null"
-          @click="handleAnswerSelection(answer)"
-        >
-          {{ answer.text }}
-        </v-btn>
-      </li>
-    </ul>
-    <div v-if="currentQuestion.selectedAnswer !== null">
+    <div v-if="currentQuestion.id <= 4">
+      <h1>{{ currentQuestion.question }}</h1>
+      <ul>
+        <li v-for="answer in currentQuestion.answers" :key="answer.id">
+          <v-btn
+            v-if="currentQuestion.selectedAnswer === null"
+            :value="answer.id"
+            v-model="selectedAnswer"
+            :disabled="currentQuestion.selectedAnswer !== null"
+            @click="handleAnswerSelection(answer)"
+          >
+            {{ answer.text }}
+          </v-btn>
+        </li>
+      </ul>
+    </div>
+    <div v-else>
       <h2>Quiz Completed! Your answers:</h2>
       <ul>
         <li v-for="answer in selectedAnswers" :key="answer.index">
