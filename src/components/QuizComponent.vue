@@ -1,10 +1,18 @@
 <template>
   <v-form>
+    <v-toolbar title="Quiz">
+      <div class="questionCounter" v-if="currentQuestion.id < 5">
+        <div>{{ currentQuestion.id }}</div>
+        /4
+      </div>
+    </v-toolbar>
+
     <div v-if="currentQuestion.id <= 4">
       <h1>{{ currentQuestion.question }}</h1>
       <ul>
         <li v-for="answer in currentQuestion.answers" :key="answer.id">
           <v-btn
+            class="v-btn"
             v-if="currentQuestion.selectedAnswer === null"
             :value="answer.id"
             v-model="selectedAnswer"
@@ -16,16 +24,16 @@
         </li>
       </ul>
     </div>
-    <div v-else class="userResults">
+    <ol v-else class="userResults">
       <h1>Quiz Completed! Your answers:</h1>
-      <div
+      <li
         class="userAnswer"
         v-for="answer in selectedAnswers"
         :key="answer.index"
       >
         {{ answer.text }}
-      </div>
-    </div>
+      </li>
+    </ol>
   </v-form>
 </template>
 
@@ -62,17 +70,15 @@ export default {
 </script>
 <style>
 form {
-  width: 75vw;
-  min-height: 40vh;
+  background-color: #fff;
+  width: 40vw;
+  min-height: 50vh;
   margin: 0 auto;
+  margin-top: 2vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   border-radius: 20px;
-  border: 2px solid #eb3b5a;
-  background-color: rgba(252, 92, 101, 0.9);
-  color: #fff;
 }
 
 ul {
@@ -82,17 +88,45 @@ ul {
   flex-direction: column;
 }
 h1 {
-  margin-bottom: 40px;
+  margin-bottom: 100px;
+  color: #000;
 }
+
 .userResults {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 }
+
 .userAnswer {
   padding: 5px;
   font-weight: bolder;
   border-radius: 10%;
+}
+form .v-btn {
+  width: 50%;
+  color: #fff;
+  background-color: rgb(252, 92, 101);
+}
+form .v-toolbar {
+  background-color: #fff;
+  border-bottom: 1px solid #000;
+  margin-bottom: 20px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+.questionCounter {
+  display: flex;
+  width: 40px;
+  color: rgb(252, 92, 101);
+}
+.questionCounter div {
+  background-color: rgb(252, 92, 101);
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 2px;
 }
 </style>

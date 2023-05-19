@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Quiz</h1>
     <QuizComponent />
   </div>
 </template>
@@ -26,7 +25,11 @@ export default defineComponent({
 </script>
 
 <style>
+body {
+  background-color: rgba(252, 92, 101, 0.9);
+}
 #app {
+  height: 95vh;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
