@@ -81,7 +81,8 @@ export default {
 <style>
 form {
   background-color: #fff;
-  width: 40vw;
+  width: 50vw;
+
   min-height: 50vh;
   margin: 0 auto;
   margin-top: 2vh;
@@ -120,7 +121,7 @@ h1 {
   border-radius: 10%;
 }
 form .v-btn {
-  width: 50%;
+  min-width: 50%;
   color: #fff;
   background-color: rgb(252, 92, 101);
 }
@@ -137,14 +138,13 @@ form .v-toolbar {
 }
 form .v-toolbar__content {
   display: flex;
-  justify-content: space-between;
   padding-left: 20px;
   padding-right: 20px;
-  align-items: center;
 }
 .previousQuestion {
-  font-size: 25px;
+  font-size: 35px;
   cursor: pointer;
+  font-weight: 800;
 }
 .questionCounter {
   display: flex;
