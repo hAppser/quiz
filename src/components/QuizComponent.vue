@@ -137,14 +137,13 @@ form .v-toolbar {
 }
 form .v-toolbar__content {
   display: flex;
-  justify-content: space-between;
   padding-left: 20px;
   padding-right: 20px;
-  align-items: center;
 }
 .previousQuestion {
-  font-size: 25px;
+  font-size: 35px;
   cursor: pointer;
+  font-weight: 800;
 }
 .questionCounter {
   display: flex;
