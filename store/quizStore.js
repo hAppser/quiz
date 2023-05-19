@@ -45,6 +45,11 @@ export const useQuizStore = defineStore({
         ],
         selectedAnswer: null,
       },
+      {
+        id: 5,
+        question: " ",
+        selectedAnswer: null,
+      },
     ],
     currentQuestionIndex: 0,
     selectedAnswers: [], // массив выбранных ответов
@@ -68,6 +73,11 @@ export const useQuizStore = defineStore({
         }
         return;
       }
+    },
+    previousQuestion() {
+      this.selectedAnswers.pop();
+      this.currentQuestionIndex -= 1;
+      this.currentQuestion.selectedAnswer = null;
     },
   },
 });
