@@ -1,73 +1,58 @@
 <template>
   <div>
-    <h2>{{ currentQuestion.question }}</h2>
+    <h1>{{ currentQuestion.text }}</h1>
     <ul>
       <li v-for="answer in currentQuestion.answers" :key="answer.id">
-        <input type="radio" :value="answer.id" v-model="selectedAnswerId" />
-        {{ answer.text }}
+        <label>
+          <input
+            type="radio"
+            :value="answer.id"
+            v-model="selectedAnswer"
+            :disabled="currentQuestion.selectedAnswer !== null"
+            @change="handleAnswerSelection"
+          />
+          {{ answer.text }}
+        </label>
       </li>
     </ul>
-    <button @click="saveAnswer">Next</button>
+    <div v-if="quizCompleted">
+      <h2>Quiz Completed!</h2>
+    </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+import { useQuizStore } from "../../store/quizStore";
+import { computed } from "@vue/reactivity";
+
 export default {
-  data() {
-    return {
-      questions: [
-        {
-          id: 1,
-          question: "Question 1",
-          answers: [
-            { id: 1, text: "Answer 1" },
-            { id: 2, text: "Answer 2" },
-            { id: 3, text: "Answer 3" },
-          ],
-        },
-        {
-          id: 2,
-          question: "Question 2",
-          answers: [
-            { id: 1, text: "Answer 1" },
-            { id: 2, text: "Answer 2" },
-            { id: 3, text: "Answer 3" },
-          ],
-        },
-      ],
-      currentQuestionIndex: 0,
-      selectedAnswerId: null,
-      selectedAnswers: [], // массив выбранных ответов
-    };
-  },
-  computed: {
-    // currentQuestion() {
-    //   return this.questions[this.currentQuestionIndex];
-    // },
-  },
-  methods: {
-    saveAnswer() {
-      // находим выбраный ответ
-      const selectedAnswer = this.currentQuestion.answers.find(
-        (answer) => answer.id === this.selectedAnswerId
-      );
+  setup() {
+    const quizStore = useQuizStore();
 
-      // Добавляем выбранный ответ в массив selectedAnswers
-      this.selectedAnswers.push({
-        question: this.currentQuestion.question,
-        selectedAnswer: selectedAnswer ? selectedAnswer.text : "No answer",
-      });
-
-      // обнуляем выбранное
-
-      this.selectedAnswerId = null;
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.currentQuestionIndex++;
-      } else {
-        console.log("Quiz completed!");
-        console.log(this.selectedAnswers); // массив со всеми выбранными ответами
+    const selectedAnswer = ref(null);
+    const currentQuestion = computed(() => quizStore.currentQuestion);
+    const handleAnswerSelection = (answer) => {
+      quizStore.selectedAnswers.push(answer);
+      quizStore.selectedAnswer(answer.id);
+      if (currentQuestion.selectedAnswer !== null) {
+        quizStore.nextQuestion();
       }
-    },
+    };
+    return {
+      currentQuestion,
+      selectedAnswer,
+      questions: quizStore.questions,
+      score: quizStore.score,
+      quizCompleted:
+        quizStore.currentQuestionIndex === quizStore.questions.length,
+      handleAnswerSelection,
+    };
   },
 };
 </script>
+<style>
+ul {
+  list-style-type: none;
+}
+</style>

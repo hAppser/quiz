@@ -1,16 +1,28 @@
 <template>
-  <QuizComponent />
+  <div>
+    <h1>Quiz</h1>
+    <QuizComponent />
+  </div>
 </template>
 
 <script>
+import { defineComponent } from "vue";
+
+import { createPinia } from "pinia";
 import QuizComponent from "./components/QuizComponent.vue";
 
-export default {
-  name: "App",
+const pinia = createPinia();
+
+export default defineComponent({
   components: {
     QuizComponent,
   },
-};
+  setup() {
+    return {
+      pinia,
+    };
+  },
+});
 </script>
 
 <style>

@@ -6,78 +6,75 @@ export const useQuizStore = defineStore({
     questions: [
       {
         id: 1,
-        question: "Select your baby’s gender ",
-        options: ["BOY", "GIRL"],
-        answered: false,
+        question: "Select your baby`s gender",
+        answers: [
+          { id: 1, text: "BOY" },
+          { id: 2, text: "GIRL" },
+        ],
+        selectedAnswer: null,
       },
       {
         id: 2,
-        question: "How old is your baby? ",
-        options: [
-          "Under 6 months",
-          "6-8 months",
-          "8-10 months",
-          "Over 10 months",
+        question: "How old is your baby?",
+        answers: [
+          { id: 1, text: "Under 6 months" },
+          { id: 2, text: "6-8 months" },
+          { id: 3, text: "8-10 months" },
+          { id: 4, text: "Over 10 months" },
         ],
-        answered: false,
+        selectedAnswer: null,
       },
       {
         id: 3,
         question: "What is your baby's current weight? ",
-        options: [
-          "Under 10 pounds",
-          "10-15 pounds",
-          "15-20 pounds",
-          "Over 20 pounds",
+        answers: [
+          { id: 1, text: "Under 10 pounds" },
+          { id: 2, text: "10-15 pounds" },
+          { id: 3, text: "15-20 pounds" },
+          { id: 4, text: "Over 20 pounds" },
         ],
-        answered: false,
+        selectedAnswer: null,
       },
       {
         id: 4,
         question: "Your baby's overall health and development  ",
-        options: [
-          "Healthy and thriving",
-          "Some health concerns",
-          "Developmental delays or concerns",
+        answers: [
+          { id: 1, text: "Healthy and thriving" },
+          { id: 2, text: "Some health concerns" },
+          { id: 3, text: "Developmental delays or concerns" },
         ],
-        answered: false,
+        selectedAnswer: null,
       },
     ],
     currentQuestionIndex: 0,
-    selectedAnswers: [],
+    // selectedAnswerId: null,
+    selectedAnswers: [], // массив выбранных ответов
   }),
   getters: {
-    getCurrentQuestion(state) {
+    currentQuestion(state) {
       return state.questions[state.currentQuestionIndex];
     },
   },
-  computed: {
-    // currentQuestion() {
-    //   return this.questions[this.currentQuestionIndex];
-    // },
-  },
-  methods: {
-    saveAnswer() {
-      // находим выбраный ответ
-      const selectedAnswer = this.currentQuestion.answers.find(
-        (answer) => answer.id === this.selectedAnswerId
-      );
+  actions: {
+    selectedAnswer(answerId) {
+      this.questions[this.currentQuestionIndex].selectedAnswer = answerId;
+    },
 
-      // Добавляем выбранный ответ в массив selectedAnswers
-      this.selectedAnswers.push({
-        question: this.currentQuestion.question,
-        selectedAnswer: selectedAnswer ? selectedAnswer.text : "No answer",
-      });
+    nextQuestion() {
+      const currentQuestion = this.currentQuestion;
 
-      // обнуляем выбранное
-
-      this.selectedAnswerId = null;
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.currentQuestionIndex++;
-      } else {
-        console.log("Quiz completed!");
-        console.log(this.selectedAnswers); // массив со всеми выбранными ответами
+      if (currentQuestion.id < this.questions.length) {
+        if (currentQuestion.selectedAnswer !== null) {
+          this.currentQuestionIndex++;
+        }
+        return;
       }
+      console.log("Quiz is over!");
     },
   },
 });
+// Добавляем выбранный ответ в массив selectedAnswers
+// this.selectedAnswers.push({
+//   question: this.currentQuestion.question,
+//   selectedAnswer: selectedAnswer ? selectedAnswer.text : "No answer",
+// });
