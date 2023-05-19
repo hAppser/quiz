@@ -1,24 +1,22 @@
 <template>
-  <div>
-    <h1>{{ currentQuestion.text }}</h1>
+  <v-form>
+    <h1>{{ currentQuestion.question }}</h1>
     <ul>
       <li v-for="answer in currentQuestion.answers" :key="answer.id">
-        <label>
-          <input
-            type="radio"
-            :value="answer.id"
-            v-model="selectedAnswer"
-            :disabled="currentQuestion.selectedAnswer !== null"
-            @change="handleAnswerSelection"
-          />
+        <v-btn
+          :value="answer.id"
+          v-model="selectedAnswer"
+          :disabled="currentQuestion.selectedAnswer !== null"
+          @onchange="handleAnswerSelection"
+        >
           {{ answer.text }}
-        </label>
+        </v-btn>
       </li>
     </ul>
     <div v-if="quizCompleted">
       <h2>Quiz Completed!</h2>
     </div>
-  </div>
+  </v-form>
 </template>
 
 <script>
@@ -35,6 +33,7 @@ export default {
     const handleAnswerSelection = (answer) => {
       quizStore.selectedAnswers.push(answer);
       quizStore.selectedAnswer(answer.id);
+      console.log(answer);
       if (currentQuestion.selectedAnswer !== null) {
         quizStore.nextQuestion();
       }
@@ -54,5 +53,8 @@ export default {
 <style>
 ul {
   list-style-type: none;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
 }
 </style>
