@@ -62,7 +62,7 @@ export const useQuizStore = defineStore({
 
     nextQuestion() {
       const currentQuestion = this.currentQuestion;
-      console.log(currentQuestion.id);
+
       if (currentQuestion.id < this.questions.length) {
         if (currentQuestion.selectedAnswer !== null) {
           this.currentQuestionIndex++;

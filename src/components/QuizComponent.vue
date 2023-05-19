@@ -24,21 +24,23 @@
 <script>
 import { ref } from "vue";
 import { useQuizStore } from "../../store/quizStore";
+import { computed } from "@vue/reactivity";
 
 export default {
   setup() {
     const quizStore = useQuizStore();
 
     const selectedAnswer = ref(null);
-
-    const handleAnswerSelection = (answerId) => {
-      quizStore.selectedAnswer(answerId);
-      if (quizStore.currentQuestion.selectedAnswer !== null) {
+    const currentQuestion = computed(() => quizStore.currentQuestion);
+    const handleAnswerSelection = (answer) => {
+      quizStore.selectedAnswers.push(answer);
+      quizStore.selectedAnswer(answer.id);
+      if (currentQuestion.selectedAnswer !== null) {
         quizStore.nextQuestion();
       }
     };
     return {
-      currentQuestion: quizStore.currentQuestion,
+      currentQuestion,
       selectedAnswer,
       questions: quizStore.questions,
       score: quizStore.score,
