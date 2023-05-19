@@ -74,5 +74,10 @@ export const useQuizStore = defineStore({
         return;
       }
     },
+    previousQuestion() {
+      this.selectedAnswers.pop();
+      this.currentQuestionIndex -= 1;
+      this.currentQuestion.selectedAnswer = null;
+    },
   },
 });

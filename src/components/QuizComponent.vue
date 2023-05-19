@@ -1,6 +1,14 @@
 <template>
   <v-form>
-    <v-toolbar title="Quiz">
+    <v-toolbar>
+      <div
+        @click="previousQuestion"
+        v-if="currentQuestion.id > 1"
+        class="previousQuestion"
+      >
+        &#8592;
+      </div>
+      <v-toolbar-title> Quiz </v-toolbar-title>
       <div class="questionCounter" v-if="currentQuestion.id < 5">
         <div>{{ currentQuestion.id }}</div>
         /4
@@ -8,7 +16,7 @@
     </v-toolbar>
 
     <div v-if="currentQuestion.id <= 4">
-      <h1>{{ currentQuestion.question }}</h1>
+      <h1 class="questionTitle">{{ currentQuestion.question }}</h1>
       <ul>
         <li v-for="answer in currentQuestion.answers" :key="answer.id">
           <v-btn
@@ -47,6 +55,7 @@ export default {
     const quizStore = useQuizStore();
     const selectedAnswers = quizStore.selectedAnswers;
     const selectedAnswer = ref(null);
+    const previousQuestion = computed(() => quizStore.previousQuestion);
     const currentQuestion = computed(() => quizStore.currentQuestion);
     const handleAnswerSelection = (answer) => {
       quizStore.selectedAnswers.push(answer);
@@ -57,6 +66,7 @@ export default {
     };
     return {
       currentQuestion,
+      previousQuestion,
       selectedAnswer,
       questions: quizStore.questions,
       score: quizStore.score,
@@ -87,11 +97,16 @@ ul {
   gap: 20px;
   flex-direction: column;
 }
-h1 {
-  margin-bottom: 100px;
-  color: #000;
+ol,
+ul {
+  padding-bottom: 20px;
 }
-
+.questionTitle {
+  margin-bottom: 80px;
+}
+h1 {
+  margin-bottom: 70px;
+}
 .userResults {
   display: flex;
   flex-direction: column;
@@ -110,11 +125,26 @@ form .v-btn {
   background-color: rgb(252, 92, 101);
 }
 form .v-toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   background-color: #fff;
   border-bottom: 1px solid #000;
   margin-bottom: 20px;
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
+}
+form .v-toolbar__content {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+}
+.previousQuestion {
+  font-size: 25px;
+  cursor: pointer;
 }
 .questionCounter {
   display: flex;
