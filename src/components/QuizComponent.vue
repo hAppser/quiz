@@ -16,13 +16,15 @@
         </li>
       </ul>
     </div>
-    <div v-else>
-      <h2>Quiz Completed! Your answers:</h2>
-      <ul>
-        <li v-for="answer in selectedAnswers" :key="answer.index">
-          {{ answer.text }}
-        </li>
-      </ul>
+    <div v-else class="userResults">
+      <h1>Quiz Completed! Your answers:</h1>
+      <div
+        class="userAnswer"
+        v-for="answer in selectedAnswers"
+        :key="answer.index"
+      >
+        {{ answer.text }}
+      </div>
     </div>
   </v-form>
 </template>
@@ -68,7 +70,9 @@ form {
   align-items: center;
   justify-content: center;
   border-radius: 20px;
-  border: 2px solid black;
+  border: 2px solid #eb3b5a;
+  background-color: rgba(252, 92, 101, 0.9);
+  color: #fff;
 }
 
 ul {
@@ -76,5 +80,19 @@ ul {
   display: flex;
   gap: 20px;
   flex-direction: column;
+}
+h1 {
+  margin-bottom: 40px;
+}
+.userResults {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.userAnswer {
+  padding: 5px;
+  font-weight: bolder;
+  border-radius: 10%;
 }
 </style>
