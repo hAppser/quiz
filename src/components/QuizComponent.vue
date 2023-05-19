@@ -81,7 +81,8 @@ export default {
 <style>
 form {
   background-color: #fff;
-  width: 40vw;
+  width: 50vw;
+
   min-height: 50vh;
   margin: 0 auto;
   margin-top: 2vh;
@@ -120,7 +121,7 @@ h1 {
   border-radius: 10%;
 }
 form .v-btn {
-  width: 50%;
+  min-width: 50%;
   color: #fff;
   background-color: rgb(252, 92, 101);
 }
