@@ -60,16 +60,17 @@ export default {
 </script>
 <style>
 form {
-  width: 75%;
-  height: 50vh;
+  width: 75vw;
+  min-height: 40vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 2px;
+  border-radius: 20px;
   border: 2px solid black;
 }
+
 ul {
   list-style-type: none;
   display: flex;
