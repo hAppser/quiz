@@ -7,7 +7,7 @@
           :value="answer.id"
           v-model="selectedAnswer"
           :disabled="currentQuestion.selectedAnswer !== null"
-          @onchange="handleAnswerSelection"
+          @click="handleAnswerSelection"
         >
           {{ answer.text }}
         </v-btn>
