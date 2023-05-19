@@ -1,24 +1,28 @@
 <template>
-  <div>
-    <h1>{{ currentQuestion.text }}</h1>
-    <ul>
+  <v-form>
+    <h1>{{ currentQuestion.question }}</h1>
+    <ul v-if="currentQuestion.id < 5">
       <li v-for="answer in currentQuestion.answers" :key="answer.id">
-        <label>
-          <input
-            type="radio"
-            :value="answer.id"
-            v-model="selectedAnswer"
-            :disabled="currentQuestion.selectedAnswer !== null"
-            @change="handleAnswerSelection"
-          />
+        <v-btn
+          v-if="currentQuestion.selectedAnswer === null"
+          :value="answer.id"
+          v-model="selectedAnswer"
+          :disabled="currentQuestion.selectedAnswer !== null"
+          @click="handleAnswerSelection(answer)"
+        >
           {{ answer.text }}
-        </label>
+        </v-btn>
       </li>
     </ul>
-    <div v-if="quizCompleted">
-      <h2>Quiz Completed!</h2>
+    <div v-if="currentQuestion.selectedAnswer !== null">
+      <h2>Quiz Completed! Your answers:</h2>
+      <ul>
+        <li v-for="answer in selectedAnswers" :key="answer.index">
+          {{ answer.text }}
+        </li>
+      </ul>
     </div>
-  </div>
+  </v-form>
 </template>
 
 <script>
@@ -29,7 +33,7 @@ import { computed } from "@vue/reactivity";
 export default {
   setup() {
     const quizStore = useQuizStore();
-
+    const selectedAnswers = quizStore.selectedAnswers;
     const selectedAnswer = ref(null);
     const currentQuestion = computed(() => quizStore.currentQuestion);
     const handleAnswerSelection = (answer) => {
@@ -47,12 +51,27 @@ export default {
       quizCompleted:
         quizStore.currentQuestionIndex === quizStore.questions.length,
       handleAnswerSelection,
+      selectedAnswers,
     };
   },
 };
 </script>
 <style>
+form {
+  width: 75%;
+  height: 50vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  border: 2px solid black;
+}
 ul {
   list-style-type: none;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
 }
 </style>
